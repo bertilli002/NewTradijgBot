@@ -6,7 +6,8 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from sqlalchemy.orm import DeclarativeBase, relationship
 from config.settings import DATABASE_URL
 
-engine = create_async_engine(DATABASE_URL, echo=False, future=True)
+DATABASE_URL_FIXED = DATABASE_URL.replace("postgresql+asyncpg://", "postgresql+psycopg://").replace("postgresql://", "postgresql+psycopg://").replace("postgres://", "postgresql+psycopg://")
+engine = create_async_engine(DATABASE_URL_FIXED, echo=False, future=True)
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 def utcnow():
